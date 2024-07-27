@@ -11,6 +11,8 @@ import {
 	AccordionSummary,
 	Typography,
 	AccordionDetails,
+	useTheme,
+	useMediaQuery,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import CheckIcon from "@mui/icons-material/Check";
@@ -148,27 +150,30 @@ const RegistrationForm = () => {
 			</Grid>
 		);
 	};
+	const theme = useTheme();
+
+	const isSm = useMediaQuery(theme.breakpoints.down("md"));
 
 	return (
-		<Grid container item xs={12} backgroundColor={"#f3f6f8"}>
-			<Grid item xs={6}>
-				<img
-					src="/assets/banner_1.png"
-					style={{ height: "96vh", width: "48vw" }}
-					alt=""
-				/>
-			</Grid>
-			<Grid
-				item
-				xs={6}
-				style={{
-					display: "flex",
-					justifyContent: "space-between",
-					alignItems: "center",
-					flexDirection: "column",
-				}}
-			>
-				<Box width={"100%"} display={"flex"} justifyContent={"space-between"}>
+		<Grid
+			container
+			item
+			xs={12}
+			backgroundColor={"#f3f6f8"}
+			// border={"2px solid green"}
+			flexDirection={isSm ? "column" : "row"}
+			justifyContent={isSm ? "center" : ""}
+			flexWrap={"wrap"}
+			// alignItems={"center"}
+		>
+			{isSm ? (
+				<Box
+					// width={"100%"}
+					display={"flex"}
+					justifyContent={"space-between"}
+					marginBottom={"6%"}
+					paddingTop={"1rem"}
+				>
 					<img src="assets/logo.svg" style={{ height: "1.4rem" }} alt="err" />
 					<Button
 						type="submit"
@@ -185,18 +190,69 @@ const RegistrationForm = () => {
 						How it works
 					</Button>
 				</Box>
-				<p
-					style={{
-						fontSize: "3.2rem",
-						margin: "0.7rem",
-						fontWeight: "400",
+			) : (
+				<></>
+			)}
+			<Grid item xs={isSm ? 12 : 6}>
+				<Box
+					sx={{
+						backgroundImage: `url(/assets/banner_1.png)`,
+						backgroundSize: "cover",
+						backgroundPosition: "center",
+						height: isSm ? "30vh" : "96vh",
+						// width: isSm ? 48vw : "48vw",
+						// border: "2px solid red",
 					}}
-				>
-					Sign up
-				</p>
+				/>
+			</Grid>
+			<Grid
+				item
+				xs={isSm ? "" : 6}
+				style={{
+					display: "flex",
+					justifyContent: "space-between",
+					alignItems: "center",
+					flexDirection: "column",
+					marginTop: isSm ? "3rem" : "",
+				}}
+			>
+				{isSm ? (
+					<></>
+				) : (
+					<Box width={"100%"} display={"flex"} justifyContent={"space-between"}>
+						<img src="assets/logo.svg" style={{ height: "1.4rem" }} alt="err" />
+						<Button
+							type="submit"
+							sx={{
+								backgroundColor: "#ffffff",
+								color: "#19ba9c",
+								fontSize: "0.7rem",
+								border: "2px solid #19ba9c", // Set the border color
+								"&:hover": {
+									backgroundColor: "#f0f0f0", // A slightly darker shade for the hover effect
+								},
+							}}
+						>
+							How it works
+						</Button>
+					</Box>
+				)}
+				{isSm ? (
+					<></>
+				) : (
+					<p
+						style={{
+							fontSize: "3.2rem",
+							margin: "0.7rem",
+							fontWeight: "400",
+						}}
+					>
+						Sign up
+					</p>
+				)}
 				<form onSubmit={formik.handleSubmit}>
 					<Grid
-						spacing={0}
+						// spacing={0}
 						style={{
 							maxWidth: "20rem",
 						}}
